@@ -1,4 +1,20 @@
+from time import perf_counter_ns
+from functools import wraps
+
 from task_input import task_input
+
+
+def timeit(func):
+    @wraps(func)
+    def decorator(*args, **kwargs):
+        start = perf_counter_ns()
+        func(*args, **kwargs)
+        end = perf_counter_ns()
+        ms = (end - start) / 1000 / 1000
+        print(f'{ms:.1f} ms')
+
+    return decorator
+
 
 digits = {
     'one': '1',
@@ -53,6 +69,7 @@ def scan_last(s: str, i: int = -1) -> str:
     return scan_last(s, i - 1)
 
 
+@timeit
 def part_1() -> None:
     """Solution to part 1."""
     s = 0
@@ -62,6 +79,7 @@ def part_1() -> None:
     print(s)
 
 
+@timeit
 def part_2() -> None:
     """Solution to part 2."""
     s = 0
