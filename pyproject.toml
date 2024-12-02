@@ -1,0 +1,170 @@
+
+[tool.poetry]
+package-mode = false
+
+
+##########################################
+#                 Ruff                   #
+##########################################
+[tool.ruff]
+line-length = 120
+force-exclude = true # Ensure ruff respects `exclude` even when specifying path directly in CLI.
+output-format = "concise" # Pretty output.
+# Doesn't seem to support absolute paths (prefixed with slash /).
+extend-exclude = [ # https://docs.astral.sh/ruff/settings/#exclude
+    ".*",
+    ".vscode",
+    ".history",
+    "venv",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "site-packages",
+]
+
+
+[tool.ruff.format] # https://docs.astral.sh/ruff/settings/#format
+quote-style = "single"
+docstring-code-format = true
+line-ending = "lf"
+skip-magic-trailing-comma = false # Similar to yapf. Trailing comma signals multiline formatting.
+
+
+[tool.ruff.lint]
+# See list of all rules: https://docs.astral.sh/ruff/rules
+preview = true
+explicit-preview-rules = true
+
+# See list of implemented and overlapping rules from pylint.
+# https://github.com/astral-sh/ruff/issues/970
+
+select = [
+    "PL", # pylint
+    "PLR0917", # pylint
+    "I", # isort.
+    "RUF008", # ruff
+    "RUF009", # ruff
+    "RUF013", # ruff
+    "RUF015", # ruff
+    "RUF016", # ruff
+    "RUF100", # ruff
+    "RUF101", # ruff
+    "RUF200", # ruff
+    "ANN001", # flake8-annotations
+    "ANN201", # flake8-annotations
+    "ANN202", # flake8-annotations
+    "ANN205", # flake8-annotations
+    "ANN206", # flake8-annotations
+    "E", # pycodestyle (Error)
+    "W", # pycodestyle (Warning)
+    "F", # Pyflakes
+    "B", # flake8-bugbear
+    "Q", # flake8-quotes
+    "RSE102",
+    "D204", # pydocstyle
+    "D211", # pydocstyle
+    "N", # pep8-naming
+    "C90", # mccabe
+    "S", # flake8-bandit
+    "BLE001", # flake8-blind-except
+    "C4", # flake8-comprehensions
+    "PIE", # flake8-pie
+    "DTZ", # flake8-datetimez
+    "DJ", # flake8-django
+    "SIM", # flake8-simplify
+    "A", # flake8-builtins (A)
+    "UP", # pyupgrade https://docs.astral.sh/ruff/rules/#pyupgrade-up
+    "FBT", # flake8-boolean-trap https://docs.astral.sh/ruff/rules/#flake8-boolean-trap-fbt
+    "G", # flake8-logging-format https://docs.astral.sh/ruff/rules/#flake8-logging-format-g
+    "LOG", # flake8-logging https://docs.astral.sh/ruff/rules/#flake8-logging-log
+    "FURB136", # refurb https://docs.astral.sh/ruff/rules/#refurb-furb
+    "FURB168", # refurb https://docs.astral.sh/ruff/rules/#refurb-furb
+    "FURB169", # refurb https://docs.astral.sh/ruff/rules/#refurb-furb
+    "FURB187", # refurb https://docs.astral.sh/ruff/rules/#refurb-furb
+]
+ignore = [
+    "PLR0913", # pylint
+    "PLR5501", # pylint
+    "PLW2901", # pylint
+    "PLR0915", # pylint
+    "PLR2004", # pylint
+    "PLR0912", # pylint
+    "PLR0911", # pylint
+    "Q000", # flake8-quotes # Ruff formatter handles this.
+    "Q003", # flake8-quotes # Ruff formatter handles this.
+    "N812", # pep8-naming # Too strict.
+    "DJ001", # flake8-django # None can be a meaningful value.
+    "DJ012", # flake8-django # Too strict, and we currently have save() at the bottom. Maybe enable later.
+    "SIM105", # flake8-simplify # I see no need to do this.
+    "SIM108", # flake8-simplify # Ternary is often not more readable.
+    "SIM117", # flake8-simplify # Multiline is often more readable.
+    "UP038", # pyupgrade # Not performant. https://docs.astral.sh/ruff/rules/non-pep604-isinstance/
+    "G004", # Too strict.
+]
+
+
+[tool.ruff.lint.per-file-ignores]
+"test_*.py" = ["PLR0917", "ANN201", "ANN001", "S101", "FBT"]
+"views.py" = ["PLR0917"]
+"__init__.py" = ["F401"]
+"dataporten/dto.py" = ["N815"]
+
+### isort ###
+[tool.ruff.lint.isort]
+length-sort = true # Sort imports on their dotted path length.
+required-imports = ["from __future__ import annotations"]
+section-order = [
+    "future", 
+    "standard-library",
+    "third-party",
+    "aoc", # Custom section.
+    "first-party",
+    "local-folder",
+]
+
+
+[tool.ruff.lint.isort.sections]
+"aoc" = ["aoc"] # Used in section-order.
+### End: isort ###
+
+
+[tool.ruff.lint.pylint]
+max-positional-args = 1
+
+
+
+##########################################
+#                 Mypy                   #
+##########################################
+[tool.mypy]
+namespace_packages = true
+ignore_missing_imports = true
+explicit_package_bases = true
+pretty = true
+color_output = true
+error_summary = true
+show_error_codes = true
+# show_error_end = false
+show_column_numbers = true
+show_error_context = true
+allow_untyped_globals = false
+warn_unreachable = true
+warn_no_return = true
+allow_redefinition = true
+warn_unused_configs = true
+disallow_any_generics = false # allow_any_generics = true
+disallow_subclassing_any = false # allow_subclassing_any = true
+disallow_untyped_calls = false # allow_untyped_calls = true
+disallow_untyped_defs = false # allow_untyped_defs = true # Covered by ruff.
+disallow_incomplete_defs = false # allow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = false # allow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = false
+no_implicit_reexport = false
+strict_equality = true
+extra_checks = true
+plugins = ["mypy_django_plugin.main"]
+

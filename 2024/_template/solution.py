@@ -1,5 +1,5 @@
 """
-https://adventofcode.com/2023/day/5
+https://adventofcode.com/2023/day/<x>
 """
 from time import perf_counter_ns
 from functools import wraps
