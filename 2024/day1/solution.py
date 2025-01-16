@@ -8,10 +8,6 @@ from task_input import L1, L2
 
 from utils import timeit
 
-# from aoc.utils import timeit
-
-# from utils import timeit
-
 
 @timeit
 def part_1() -> None:
@@ -21,7 +17,7 @@ def part_1() -> None:
     s = 0
     for i in range(len(l1)):
         s += abs(l1[i] - l2[i])
-    print(s)  # 1765812
+    print(s)
 
 
 @timeit
@@ -40,9 +36,9 @@ def part_2() -> None:
 
         s += i * c1[i] * c2[i]
 
-    print(s)  # 20520794
+    print(s)
 
 
 if __name__ == '__main__':
-    part_1()
-    part_2()
+    part_1()  # 1765812
+    part_2()  # 20520794
